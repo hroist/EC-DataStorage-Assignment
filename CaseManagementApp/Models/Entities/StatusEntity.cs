@@ -13,7 +13,7 @@ namespace CaseManagementApp.Models.Entities
         [Column(TypeName = "nvarchar(50)")]
         public string Description { get; set; } = string.Empty;
 
-        public ICollection<CaseEntity> Cases = new HashSet<CaseEntity>();
+        public ICollection<ReportEntity> Reports = new HashSet<ReportEntity>();
     }
 
 }

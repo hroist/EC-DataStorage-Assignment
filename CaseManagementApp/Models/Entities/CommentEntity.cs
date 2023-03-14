@@ -11,7 +11,7 @@ namespace CaseManagementApp.Models.Entities
 
         [Required]
         public int CaseId { get; set; }
-        public CaseEntity Case { get; set; } = null!;
+        public ReportEntity Report { get; set; } = null!;
 
         [Required]
         public DateTime TimeStamp { get; set; }

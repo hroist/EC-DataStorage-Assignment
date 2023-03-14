@@ -32,21 +32,21 @@ namespace CaseManagementApp.ViewModels
         private string caseDescription = string.Empty;
 
         [RelayCommand]
-        private async void AddCase()
+        private async void AddReport()
         {
-            var _case = new Case();
+            var _report = new Report();
 
-            _case.ClientFirstName = FirstName;
-            _case.ClientLastName = LastName;
-            _case.ClientEmail = Email;
-            _case.ClientPhoneNumber = PhoneNumber ?? "";
-            _case.Title = CaseTitle;
-            _case.Description = CaseDescription;
-            _case.Status = "Ej påbörjad";
-            _case.TimeStamp = DateTime.Now;
+            _report.ClientFirstName = FirstName;
+            _report.ClientLastName = LastName;
+            _report.ClientEmail = Email;
+            _report.ClientPhoneNumber = PhoneNumber ?? "";
+            _report.Title = CaseTitle;
+            _report.Description = CaseDescription;
+            _report.Status = "Ej påbörjad";
+            _report.TimeStamp = DateTime.Now;
 
             //save to database
-            await CaseService.SaveAsync(_case);
+            await CaseService.SaveAsync(_report);
 
             FirstName = String.Empty;
             LastName = String.Empty;

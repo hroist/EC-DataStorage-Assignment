@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CaseManagementApp.Models
 {
-    internal class Case
+    public class Report
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace CaseManagementApp.Models
 
         public string ClientEmail { get; set; } = string.Empty;
 
-        public string? ClientPhoneNumber { get; set; } 
+        public string? ClientPhoneNumber { get; set; }
 
         public DateTime TimeStamp { get; set; }
 

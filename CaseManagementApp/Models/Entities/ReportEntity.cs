@@ -1,13 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CaseManagementApp.Models.Entities
 {
-    internal class CaseEntity
+    internal class ReportEntity
     {
         [Key]
         public int Id { get; set; }
@@ -29,10 +30,9 @@ namespace CaseManagementApp.Models.Entities
         public ClientEntity Client { get; set; } = null!;
 
         public int? CommentId { get; set; }
-        public CommentEntity? Comments { get; set; }
+        public ICollection<CommentEntity>? Comments { get; set; }
 
         [Required]
         public DateTime TimeStamp { get; set; }
-
     }
 }

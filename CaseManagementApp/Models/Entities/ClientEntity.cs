@@ -26,7 +26,7 @@ namespace CaseManagementApp.Models.Entities
         [Column(TypeName = "char(13)")]
         public string? PhoneNumber { get; set; } = string.Empty;
 
-        public ICollection <CaseEntity> Cases = new HashSet<CaseEntity>();
+        public ICollection <ReportEntity> Reports = new HashSet<ReportEntity>();
     }
 
 }

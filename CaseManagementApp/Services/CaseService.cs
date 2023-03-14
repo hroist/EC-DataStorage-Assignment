@@ -14,16 +14,16 @@ namespace CaseManagementApp.Services
     {
         private static DataContext _context = new DataContext();
 
-        public static async Task SaveAsync(Case c )
+        public static async Task SaveAsync(Report report )
         {
-            var _caseEntity = new CaseEntity
+            var _caseEntity = new ReportEntity
             {
-                Title = c.Title,
-                Description = c.Description,
-                TimeStamp = c.TimeStamp,
+                Title = report.Title,
+                Description = report.Description,
+                TimeStamp = report.TimeStamp,
             };
 
-            var _clientEntity = await _context.Clients.FirstOrDefaultAsync(x => x.FirstName == c.ClientFirstName && x.LastName == c.ClientLastName && x.Email == c.ClientEmail && x.PhoneNumber == c.ClientPhoneNumber);
+            var _clientEntity = await _context.Clients.FirstOrDefaultAsync(x => x.FirstName == report.ClientFirstName && x.LastName == report.ClientLastName && x.Email == report.ClientEmail && x.PhoneNumber == report.ClientPhoneNumber);
             if ( _clientEntity != null )
             {
                 _caseEntity.ClientId = _clientEntity.Id;
@@ -32,14 +32,14 @@ namespace CaseManagementApp.Services
             {
                 _caseEntity.Client = new ClientEntity
                 {
-                    FirstName = c.ClientFirstName,
-                    LastName = c.ClientLastName,
-                    Email = c.ClientEmail,
-                    PhoneNumber = c.ClientPhoneNumber
+                    FirstName = report.ClientFirstName,
+                    LastName = report.ClientLastName,
+                    Email = report.ClientEmail,
+                    PhoneNumber = report.ClientPhoneNumber
                 };
             }
 
-            var _statusEntity = await _context.Statuses.FirstOrDefaultAsync(x => x.Description == c.Status);
+            var _statusEntity = await _context.Statuses.FirstOrDefaultAsync(x => x.Description == report.Status);
             if (_statusEntity != null)
             {
                 _caseEntity.StatusId = _statusEntity.Id;
@@ -56,29 +56,26 @@ namespace CaseManagementApp.Services
             await _context.SaveChangesAsync();
         }
 
-        public static async Task <IEnumerable<Case>> GetAllAsync()
+        public static async Task<IEnumerable<Report>> GetAllAsync()
         {
-            var _cases = new List<Case>();
+            var _reports = new List<Report>();
 
-            foreach(var _case in await _context.Cases.Include(x => x.Client).Include(x => x.Status).ToListAsync())
+            foreach(var _report in await _context.Reports.Include(x => x.Client).Include(x => x.Status).ToListAsync())
             {
-                _cases.Add(new Case
+                _reports.Add(new Report
                 {
-                    Id = _case.Id,
-                    Title = _case.Title,
-                    Description = _case.Description,
-                    Status = _case.Status.Description,
-                    ClientFirstName = _case.Client.FirstName,
-                    ClientLastName = _case.Client.LastName,
-                    ClientEmail = _case.Client.Email,
-                    ClientPhoneNumber = _case.Client.PhoneNumber,
-                    TimeStamp = _case.TimeStamp
-
+                    Id = _report.Id,
+                    Title = _report.Title,
+                    Description = _report.Description,
+                    Status = _report.Status.Description,
+                    ClientFirstName = _report.Client.FirstName,
+                    ClientLastName = _report.Client.LastName,
+                    ClientEmail = _report.Client.Email,
+                    ClientPhoneNumber = _report.Client.PhoneNumber,
+                    TimeStamp = _report.TimeStamp
                 });
             }
-
-
-            return _cases;
+            return _reports;
         }
     }
 }

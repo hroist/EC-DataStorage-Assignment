@@ -37,7 +37,7 @@ namespace CaseManagementApp.Contexts
 
         #region entities
 
-        public DbSet<CaseEntity> Cases { get; set; } = null!;
+        public DbSet<ReportEntity> Reports { get; set; } = null!;
         public DbSet<ClientEntity> Clients { get; set; } = null!;
         public DbSet<CommentEntity> Comments { get; set; } = null!;
         public DbSet<StatusEntity> Statuses { get; set; } = null!;

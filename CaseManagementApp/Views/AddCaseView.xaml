@@ -30,7 +30,7 @@
             <TextBlock Text="Beskrivning av ärende" />
             <TextBox Text="{Binding CaseDescription}" Padding="2" Margin="0 2 0 2" />
 
-            <Button Content="SKICKA ÄRENDE" Command="{Binding AddCaseCommand}" Style="{StaticResource stdButton}" Padding="5" Margin="0 15 300 5" />
+            <Button Content="SKICKA ÄRENDE" Command="{Binding AddReportCommand}" Style="{StaticResource stdButton}" Padding="5" Margin="0 15 300 5" />
 
         </StackPanel>
 

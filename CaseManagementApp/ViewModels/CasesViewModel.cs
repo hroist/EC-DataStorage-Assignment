@@ -14,13 +14,18 @@ namespace CaseManagementApp.ViewModels
     {
         public CasesViewModel()
         {
-            var cases = CaseService.GetAllAsync();
-            
+            LoadCasesAsync();
         }
 
-        [ObservableProperty]
-        private ObservableCollection<Case> cases;
+        private async void LoadCasesAsync()
+        {
+            Reports = new ObservableCollection<Report>(await CaseService.GetAllAsync());
+        }
 
-  
+
+        [ObservableProperty]
+        private ObservableCollection<Report> reports;
+
+
     }
 }
