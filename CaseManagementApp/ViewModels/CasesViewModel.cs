@@ -30,6 +30,9 @@ namespace CaseManagementApp.ViewModels
         private Report selectedReport = null!;
 
         [ObservableProperty]
+        private bool selectedIsNotNull = false;
+
+        [ObservableProperty]
         private ObservableCollection<Comment> comments;
 
         public ObservableCollection<string> Statuses { get; set; } = new ObservableCollection<string> { "Ej påbörjad", "Pågående", "Avslutad" };
@@ -63,8 +66,8 @@ namespace CaseManagementApp.ViewModels
 
         partial void OnSelectedReportChanged(Report value)
         {
+            SelectedIsNotNull = true;
             ShowCommentsAsync(SelectedReport);
-
         }
 
 
