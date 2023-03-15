@@ -10,7 +10,7 @@ namespace CaseManagementApp.Models.Entities
         public int Id { get; set; }
 
         [Required]
-        public int CaseId { get; set; }
+        public int ReportId { get; set; }
         public ReportEntity Report { get; set; } = null!;
 
         [Required]

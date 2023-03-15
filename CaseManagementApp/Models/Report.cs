@@ -20,6 +20,8 @@ namespace CaseManagementApp.Models
 
         public string ClientLastName { get; set; } = string.Empty;
 
+        public string ClientDisplayName => $"{ClientFirstName} {ClientLastName}";
+
         public string ClientEmail { get; set; } = string.Empty;
 
         public string? ClientPhoneNumber { get; set; }

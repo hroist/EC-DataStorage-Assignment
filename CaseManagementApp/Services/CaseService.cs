@@ -77,5 +77,31 @@ namespace CaseManagementApp.Services
             }
             return _reports;
         }
+
+        public static async Task UpdateStatusAsync(Report report)
+        {
+            var _reportEntity = await _context.Reports.Include(x => x.Client).Include(x => x.Status).FirstOrDefaultAsync(x => x.Id == report.Id);
+            if( _reportEntity != null )
+            {
+                if (!string.IsNullOrEmpty(report.Status))
+                {
+                    var _statusEntity = await _context.Statuses.FirstOrDefaultAsync(x => x.Description == report.Status);
+                    if( _statusEntity != null )
+                    {
+                        _reportEntity.StatusId = _statusEntity.Id;
+                    }
+                    else
+                    {
+                        _reportEntity.Status = new StatusEntity
+                        {
+                            Description = report.Status
+                        };
+                    }
+                }
+                _context.Update(_reportEntity);
+                await _context.SaveChangesAsync();
+
+            }
+        }
     }
 }

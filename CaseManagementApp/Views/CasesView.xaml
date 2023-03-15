@@ -32,13 +32,80 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="0" ItemsSource="{Binding Reports}">
+            <ListView Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Reports}" SelectionMode="Single" SelectedItem="{Binding SelectedReport}" ItemContainerStyle="{StaticResource ListItemStyle}">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Title}" />
+                    <DataTemplate DataType="{x:Type models:Report}">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Id}" />
+                                <TextBlock Grid.Column="1" Text="{Binding Title}"  />
+                                <TextBlock Grid.Column="2" Text="{Binding Status}"  />
+                            </Grid>
+
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+
+            <Grid Background="White" Grid.Column="1" Margin="15 0 0 0" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />                        
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Grid.Row="0" Margin="5" >
+                        <TextBlock FontWeight="Medium" Text="Ämne:" />
+                        <TextBlock FontWeight="Medium" Text="Beskrivning:" Height="50" />
+                        <TextBlock FontWeight="Medium" Text="Status:" Height="21" />
+                        <TextBlock FontWeight="Medium" Text="Namn:" />
+                        <TextBlock FontWeight="Medium" Text="Email:" />
+                        <TextBlock FontWeight="Medium" Text="Telefonnummer:" />
+                        <TextBlock FontWeight="Medium" Text="Kommentarer:" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
+                        <TextBlock Text="{Binding SelectedReport.Title}" />
+                        <TextBlock Text="{Binding SelectedReport.Description}" TextWrapping="Wrap" Height="50"/>
+                        <ComboBox  ItemsSource="{Binding Statuses}" Text="{Binding SelectedReport.Status}"  SelectedValue="{Binding SelectedStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="{Binding SelectedReport.ClientDisplayName}" />
+                        <TextBlock Text="{Binding SelectedReport.ClientEmail}" />
+                        <TextBlock Text="{Binding SelectedReport.ClientPhoneNumber}" />
+                        <TextBlock Text="{Binding SelectedReport.Comments}" />
+                    </StackPanel>
+
+                    <ListView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="0" SelectionMode="Single" ItemsSource="{Binding Comments}" ItemContainerStyle="{StaticResource ListItemStyle}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:Comment}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding TimeStamp}" Margin="0 0 10 0" />
+                                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <StackPanel Margin="10 0 0 0 " Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="Skriv kommentar:"  />
+                        <TextBox Text="{Binding CommentText}" Height="70"/>
+                        <Button Command="{Binding AddCommentCommand}" Style="{StaticResource stdButton}" Content="Lägg till kommentar" Width="150" HorizontalAlignment="Left" Margin="0 5 5 0" />
+                    </StackPanel>
+                   
+                </Grid>
+                
+            </Grid>
 
         </Grid>
     </Grid>
