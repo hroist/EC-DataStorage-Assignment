@@ -12,7 +12,7 @@ namespace CaseManagementApp.Services
 {
     internal class CommentService
     {
-        private static DataContext _context = new DataContext();
+        private static readonly DataContext _context = new();
 
         public static async Task SaveCommentAsync(Report report, Comment comment)
         {

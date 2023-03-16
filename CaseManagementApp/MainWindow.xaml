@@ -19,8 +19,8 @@
 
         <!-- NAVIGATION -->
         <StackPanel Grid.Column="0"  Background="#A5BCB8">
-            <Button Command="{Binding GoToAddCaseCommand}" Style="{StaticResource navButton}" Content="&#xf234;" Margin="15 10 20 10" ToolTip="Lägg till ärende" />
-            <Button Command="{Binding GoToCasesCommand}" Style="{StaticResource navButton}" Content="&#xf2b9;" Margin="15 0 20 10" ToolTip="Ärenden"/>
+            <Button Command="{Binding GoToAddCaseCommand}" Style="{StaticResource navButton}" Content="&#xf0fe;" Margin="15 10 20 10" ToolTip="Lägg till ärende" />
+            <Button Command="{Binding GoToCasesCommand}" Style="{StaticResource navButton}" Content="&#xf07c;" Margin="15 0 20 10" ToolTip="Alla ärenden"/>
         </StackPanel>
 
         <!-- NAVIGATION CONTROL -->

@@ -9,8 +9,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Printing;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CaseManagementApp.ViewModels
 {
@@ -24,7 +26,7 @@ namespace CaseManagementApp.ViewModels
         }
 
         [ObservableProperty]
-        private ObservableCollection<Report> reports;
+        private ObservableCollection<Report> reports = null!;
 
         [ObservableProperty]
         private Report selectedReport = null!;
@@ -33,7 +35,7 @@ namespace CaseManagementApp.ViewModels
         private bool selectedIsNotNull = false;
 
         [ObservableProperty]
-        private ObservableCollection<Comment> comments;
+        private ObservableCollection<Comment> comments = null!;
 
         public ObservableCollection<string> Statuses { get; set; } = new ObservableCollection<string> { "Ej påbörjad", "Pågående", "Avslutad" };
 
@@ -47,9 +49,13 @@ namespace CaseManagementApp.ViewModels
             }
             set
             {
-                selectedStatus = value;
-                SelectedReport.Status = selectedStatus;
-                UpdateStatus();
+                if(SelectedReport != null!)
+                {
+                    selectedStatus = value;
+                    SelectedReport.Status = selectedStatus;
+                    UpdateStatus();
+                }
+
             } 
         }
 
@@ -66,25 +72,34 @@ namespace CaseManagementApp.ViewModels
 
         partial void OnSelectedReportChanged(Report value)
         {
-            SelectedIsNotNull = true;
-            ShowCommentsAsync(SelectedReport);
-        }
+            if(SelectedReport != null!)
+            {
+                SelectedIsNotNull = true;
+                ShowCommentsAsync(SelectedReport);
+            }
 
+        }
 
         [RelayCommand]
         private async void AddComment()
         {
-            var _comment = new Comment();
+            var _selectedReport = SelectedReport;
 
-            _comment.Text = CommentText;
-            _comment.TimeStamp = DateTime.Now;
-            _comment.ReportId = SelectedReport.Id;
+            var _comment = new Comment
+            {
+                Text = CommentText,
+                TimeStamp = DateTime.Now,
+                ReportId = _selectedReport.Id
+            };
 
             //save to database
-            await CommentService.SaveCommentAsync(SelectedReport, _comment);
+            await CommentService.SaveCommentAsync(_selectedReport, _comment);
 
             CommentText = string.Empty;
 
+
+            SelectedReport = null!;
+            SelectedReport = _selectedReport;
         }
 
         
@@ -95,5 +110,16 @@ namespace CaseManagementApp.ViewModels
             await CaseService.UpdateStatusAsync(SelectedReport);
         }
 
+        [RelayCommand]
+        public async void RemoveButton()
+        {
+            if (MessageBox.Show("Är du säker på att du vill ta bort kontakten?", "RemoveQuestion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+            {
+                await CaseService.DeleteAsync(SelectedReport);
+                LoadCasesAsync();
+                SelectedIsNotNull = false;
+            }
+            else { }
+        }
     }
 }

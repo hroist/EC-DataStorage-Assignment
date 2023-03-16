@@ -29,7 +29,6 @@ namespace CaseManagementApp.Models.Entities
         public int ClientId { get; set; }
         public ClientEntity Client { get; set; } = null!;
 
-        public int? CommentId { get; set; }
         public ICollection<CommentEntity>? Comments { get; set; }
 
         [Required]

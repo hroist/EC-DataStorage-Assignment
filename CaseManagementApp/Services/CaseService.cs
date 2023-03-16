@@ -12,7 +12,7 @@ namespace CaseManagementApp.Services
 {
     internal class CaseService
     {
-        private static DataContext _context = new DataContext();
+        private readonly static DataContext _context = new();
 
         public static async Task SaveAsync(Report report )
         {
@@ -102,6 +102,17 @@ namespace CaseManagementApp.Services
                 await _context.SaveChangesAsync();
 
             }
+        }
+
+        public static async Task<IEnumerable<Report>> DeleteAsync(Report report)
+        {
+            var _reportEntity = await _context.Reports.Include(x => x.Client).Include(x => x.Status).FirstOrDefaultAsync(x => x.Id == report.Id);
+            if (_reportEntity != null)
+            {
+                _context.Remove(_reportEntity);
+                await _context.SaveChangesAsync();
+            }
+            return await GetAllAsync();
         }
     }
 }
